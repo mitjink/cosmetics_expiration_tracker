@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 cosmetics = []
 
-#Преобразует строку 'ГГГГ-ММ-ДД' в объект date.
+# Преобразует строку 'ГГГГ-ММ-ДД' в объект date.
 def parse_date(text):
     try:
         return datetime.strptime(text, "%Y-%m-%d").date()
@@ -37,7 +37,7 @@ def add_cosmetic():
     cosmetics.append(item)
     print(f"Средство «{name}» добавлено.")
 
-#Отметка даты вскрытия средства.
+# Отметка даты вскрытия средства.
 def open_cosmetic():
     print("\n--- Отметить вскрытие ---")
     if not cosmetics:
@@ -63,7 +63,7 @@ def open_cosmetic():
     deadline = item["opened"] + timedelta(days=item["months"] * 30)
     print(f"Средство «{item['name']}» вскрыто. Использовать до {deadline}.")
 
-#Возвращает статус средства.
+# Возвращает статус средства.
 def get_status(item):
     if item["opened"] is None:
         if item["expiry"] < date.today():
@@ -79,7 +79,7 @@ def get_status(item):
         return f"скоро истекает ({days_left} дн.)"
     return f"ок ({days_left} дн.)"
 
-#Показывает список всех средств.
+# Показывает список всех средств.
 def show_list():
     print("\n--- Список средств ---")
     if not cosmetics:
@@ -89,7 +89,7 @@ def show_list():
     for i, item in enumerate(cosmetics, start=1):
         print(f"{i}. {item['brand']} {item['name']} {get_status(item)}")
 
-#Показывает средства, срок которых истекает или уже истёк.
+# Показывает средства, срок которых истекает или уже истёк.
 def show_reminders():
     print("\n--- Напоминания ---")
     found = False
