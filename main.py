@@ -11,12 +11,14 @@ def parse_date(text):
 
 # Добавление нового косметического средства
 def add_cosmetic():
-    print("\n--- Добавление средства ---")
+    print("\nДобавление средства")
     name = input("Название: ").strip()
     brand = input("Бренд: ").strip()
 
     expiry_str = input("Срок годности до вскрытия (ГГГГ-ММ-ДД): ").strip()
     expiry = parse_date(expiry_str)
+    if expiry < date.today():
+        print("Внимание: срок годности до вскрытия уже истёк!")
     if expiry is None:
         print("Некорректная дата. Средство не добавлено.")
         return
@@ -39,7 +41,7 @@ def add_cosmetic():
 
 # Отметка даты вскрытия средства.
 def open_cosmetic():
-    print("\n--- Отметить вскрытие ---")
+    print("\nОтметить вскрытие")
     if not cosmetics:
         print("Список пуст.")
         return
@@ -55,6 +57,9 @@ def open_cosmetic():
         return
 
     item = cosmetics[index]
+    if item["expiry"] < date.today():
+        print(f"Средство «{item['name']}» просрочено до вскрытия ({item['expiry']}). Вскрывать нельзя.")
+        return
     if item["opened"] is not None:
         print(f"Средство уже вскрыто {item['opened']}.")
         return
@@ -81,7 +86,7 @@ def get_status(item):
 
 # Показывает список всех средств.
 def show_list():
-    print("\n--- Список средств ---")
+    print("\nСписок средств")
     if not cosmetics:
         print("Список пуст.")
         return
@@ -91,7 +96,7 @@ def show_list():
 
 # Показывает средства, срок которых истекает или уже истёк.
 def show_reminders():
-    print("\n--- Напоминания ---")
+    print("\nНапоминания")
     found = False
     for item in cosmetics:
         status = get_status(item)
@@ -104,7 +109,7 @@ def show_reminders():
 
 def main():
     menu = (
-        "\n--- Контроль сроков косметики ---\n"
+        "\nКонтроль сроков косметики\n"
         "1. Добавить средство\n"
         "2. Отметить вскрытие\n"
         "3. Показать список\n"
