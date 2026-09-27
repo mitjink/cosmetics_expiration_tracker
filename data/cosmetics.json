@@ -1,0 +1,16 @@
+[
+  {
+    "name": "шампунь",
+    "brand": "syoss",
+    "expiry": "2026-01-12",
+    "months": 3,
+    "opened": null
+  },
+  {
+    "name": "крем для рук",
+    "brand": "-",
+    "expiry": "2027-08-16",
+    "months": 12,
+    "opened": null
+  }
+]

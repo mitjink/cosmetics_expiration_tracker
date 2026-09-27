@@ -15,10 +15,10 @@ def input_date(prompt: str) -> date:
         try:
             return datetime.strptime(text, "%Y-%m-%d").date()
         except ValueError:
-            print("Неверный формат даты. Пример: 2006-09-21")
+            print("Неверный формат даты. Пример: 2026-09-27")
 
 
-def input_not_empty(prompt: str) -> str:
+def input_non_empty(prompt: str) -> str:
     while True:
         text = input(prompt).strip()
         if text:

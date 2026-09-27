@@ -1,42 +1,66 @@
 from datetime import date, timedelta
 
-from cosmetics import get_status, count_by_status, sort_cosmetics_by_name
+from models import Cosmetic
 
 
-def make_item(name="Крем", brand="Brand", months=6, opened=None, expiry=None):
-    if expiry is None:
-        expiry = date.today() + timedelta(days=365)
-    return {
-        "name": name,
-        "brand": brand,
-        "expiry": expiry.isoformat(),
-        "months": months,
-        "opened": opened,
+def make_cosmetic(**kwargs) -> Cosmetic:
+    defaults = {
+        "cosmetic_id": 1,
+        "name": "Крем",
+        "brand": "Brand",
+        "expiry": (date.today() + timedelta(days=365)).isoformat(),
+        "months": 6,
+        "opened": None,
     }
+    defaults.update(kwargs)
+    return Cosmetic(**defaults)
 
 
-def test_status_not_opened():
-    item = make_item()
-    assert get_status(item) == "не вскрыто"
+def test_cosmetic_creation():
+    cosmetic = make_cosmetic()
+    assert cosmetic.id == 1
+    assert cosmetic.name == "Крем"
+    assert cosmetic.brand == "Brand"
+    assert cosmetic.opened is None
 
 
-def test_status_expired_before_opening():
-    item = make_item(expiry=date.today() - timedelta(days=1))
-    assert "просрочено до вскрытия" in get_status(item)
+def test_cosmetic_is_not_opened():
+    cosmetic = make_cosmetic()
+    assert not cosmetic.is_opened()
 
 
-def test_status_ok_after_opening():
-    item = make_item(opened=date.today().isoformat(), months=6)
-    assert "ок" in get_status(item)
+def test_cosmetic_expired_before_opening():
+    cosmetic = make_cosmetic(
+        expiry=(date.today() - timedelta(days=1)).isoformat()
+    )
+    assert cosmetic.is_expired_before_opening()
+    assert cosmetic.get_status() == Cosmetic.STATUS_EXPIRED_BEFORE
 
 
-def test_count_by_status():
-    items = [make_item(), make_item()]
-    stats = count_by_status(items)
-    assert stats.get("не вскрыто") == 2
+def test_cosmetic_open():
+    cosmetic = make_cosmetic()
+    cosmetic.open()
+    assert cosmetic.is_opened()
+    assert cosmetic.get_deadline() is not None
 
 
-def test_sort_cosmetics_by_name():
-    items = [make_item(name="Б"), make_item(name="А")]
-    sorted_items = sort_cosmetics_by_name(items)
-    assert sorted_items[0]["name"] == "А"
+def test_cosmetic_status_ok():
+    cosmetic = make_cosmetic()
+    cosmetic.open()
+    assert Cosmetic.STATUS_OK in cosmetic.get_status()
+
+
+def test_cosmetic_to_dict_and_back():
+    cosmetic = make_cosmetic()
+    data = cosmetic.to_dict()
+    restored = Cosmetic.from_dict(data)
+    assert restored.id == cosmetic.id
+    assert restored.name == cosmetic.name
+    assert restored.brand == cosmetic.brand
+
+
+def test_cosmetic_str():
+    cosmetic = make_cosmetic()
+    text = str(cosmetic)
+    assert "Крем" in text
+    assert "не вскрыто" in text
