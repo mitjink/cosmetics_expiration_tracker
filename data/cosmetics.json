@@ -4,13 +4,15 @@
     "brand": "syoss",
     "expiry": "2026-01-12",
     "months": 3,
-    "opened": null
+    "opened": null,
+    "id": 1
   },
   {
     "name": "крем для рук",
     "brand": "-",
     "expiry": "2027-08-16",
     "months": 12,
-    "opened": null
+    "opened": null,
+    "id": 2
   }
 ]

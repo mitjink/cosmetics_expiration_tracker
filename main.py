@@ -77,8 +77,9 @@ def open_cosmetic(
         return
 
     if cosmetic.is_expired_before_opening():
-        print(f"Средство «{cosmetic.name}» просрочено до вскрытия. "
-              "Вскрывать нельзя.")
+        print(
+            f"Средство «{cosmetic.name}» просрочено до вскрытия. " "Вскрывать нельзя."
+        )
         return
 
     if cosmetic.is_opened():

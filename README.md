@@ -101,6 +101,7 @@
 - Python 3.x
 - pytest
 - flake8
+- Django==5.2.*
 
 ## Установка зависимостей
 
@@ -113,6 +114,11 @@
 ## Запуск тестов
 
 ```python -m pytest```
+
+## Запуск веб-версии  
+
+```python manage.py check```
+```python manage.py runserver```
 
 ## Проверка качества кода
 

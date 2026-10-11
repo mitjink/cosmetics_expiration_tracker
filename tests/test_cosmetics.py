@@ -30,9 +30,7 @@ def test_cosmetic_is_not_opened():
 
 
 def test_cosmetic_expired_before_opening():
-    cosmetic = make_cosmetic(
-        expiry=(date.today() - timedelta(days=1)).isoformat()
-    )
+    cosmetic = make_cosmetic(expiry=(date.today() - timedelta(days=1)).isoformat())
     assert cosmetic.is_expired_before_opening()
     assert cosmetic.get_status() == Cosmetic.STATUS_EXPIRED_BEFORE
 
