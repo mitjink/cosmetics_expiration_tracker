@@ -1,9 +1,49 @@
+# --- Виртуальное окружение ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- Python ---
 __pycache__/
 *.py[cod]
-.venv/
-venv/
-env/
-.idea/
-.vscode/
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Django ---
 *.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# --- Тесты и покрытие ---
 .pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- flake8 / mypy / ruff ---
+.mypy_cache/
+.ruff_cache/
+.flake8_cache/
+
+# --- IDE / редакторы ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- ОС ---
+.DS_Store
+Thumbs.db
+
+# --- Прочее ---
+.env
+*.bak
